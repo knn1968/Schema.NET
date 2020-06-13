@@ -1,4 +1,4 @@
-﻿namespace Schema.NET
+namespace Schema.NET
 {
     using System;
     using System.Runtime.Serialization;
@@ -63,6 +63,11 @@
         /// An eventStatus of an event represents its status; particularly useful when an event is cancelled or rescheduled.
         /// </summary>
         OneOrMany<EventStatusType?> EventStatus { get; set; }
+
+        /// <summary>
+        /// The eventAttendanceMode of an event indicates whether it occurs online, offline, or a mix.
+        /// </summary>
+        OneOrMany<EventAttendanceMode?> EventAttendanceMode { get; set; }
 
         /// <summary>
         /// A person or organization that supports (sponsors) something through some kind of financial contribution.
@@ -432,6 +437,13 @@
         [JsonConverter(typeof(ValuesJsonConverter))]
         public OneOrMany<ICreativeWork> WorkPerformed { get; set; }
 
+        /// <summary>
+        /// The eventAttendanceMode of an event indicates whether it occurs online, offline, or a mix.
+        /// </summary>
+        [DataMember(Name = "eventAttendanceMode", Order = 140)]
+        [JsonConverter(typeof(ValuesJsonConverter))]
+        public OneOrMany<EventAttendanceMode?> EventAttendanceMode { get; set; }
+
         /// <inheritdoc/>
         public bool Equals(Event other)
         {
@@ -457,6 +469,7 @@
                 this.DoorTime == other.DoorTime &&
                 this.Duration == other.Duration &&
                 this.EventStatus == other.EventStatus &&
+                this.EventAttendanceMode == other.EventAttendanceMode &&
                 this.Funder == other.Funder &&
                 this.InLanguage == other.InLanguage &&
                 this.IsAccessibleForFree == other.IsAccessibleForFree &&
@@ -499,6 +512,7 @@
             .And(this.DoorTime)
             .And(this.Duration)
             .And(this.EventStatus)
+            .And(this.EventAttendanceMode)
             .And(this.Funder)
             .And(this.InLanguage)
             .And(this.IsAccessibleForFree)
